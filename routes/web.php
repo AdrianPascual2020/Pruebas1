@@ -14,11 +14,9 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-/**
- * Se podría hacer con resource para ahorrarnos lineas
- * pero he preferido escribir una a una
- */
 Route::get('/', [TaskController::class, 'list_tasks']);
-Route::post('/obtener-tareas', [TaskController::class, 'get'])->name('get');
-Route::put('/crear-tarea', [TaskController::class, 'store'])->name('store');
-Route::delete('/eliminar-tarea', [TaskController::class, 'delete'])->name('delete');
+Route::middleware(['ajax'])->group(function () {
+    Route::post('/obtener-tareas', [TaskController::class, 'get'])->name('get');
+    Route::put('/crear-tarea', [TaskController::class, 'store'])->name('store');
+    Route::delete('/eliminar-tarea', [TaskController::class, 'delete'])->name('delete');
+});
